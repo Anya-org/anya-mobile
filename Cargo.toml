@@ -5,3 +5,4 @@ edition = "2021"
 
 [dependencies]
 anya-core = "*"
+dioxus = { version = "0.6.3", features = ["desktop", "hooks"] }
