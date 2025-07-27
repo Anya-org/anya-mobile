@@ -1,4 +1,3 @@
-
 use dioxus::prelude::*;
 
 mod components;
@@ -22,6 +21,7 @@ fn app() -> Element {
         div {
             style: "background: #f5f6fa; color: #222; font-family: sans-serif; padding: 32px; display: flex; flex-direction: column; height: 100vh;",
             h1 { "Anya Wallet" }
+            TabBar { current_tab: current_tab.clone() }
             div {
                 style: "display: flex; justify-content: space-around; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px #eee; padding: 12px; margin-bottom: 24px;",
                 button { onclick: move |_| current_tab.set(Tab::Wallet), "Wallet" }
