@@ -3,10 +3,10 @@ use dioxus::prelude::*;
 use anya_core::api::handlers::wallet as wallet_handler;
 
 fn main() {
-    dioxus::launch(App);
+    dioxus::launch(app);
 }
 
-fn App() -> Element {
+fn app() -> Element {
     // State for wallet balance
     let mut balance = use_signal(|| None);
 
