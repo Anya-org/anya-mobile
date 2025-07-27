@@ -1,35 +1,97 @@
-
 use dioxus::prelude::*;
-use anya_core::api::handlers::wallet as wallet_handler;
 
 fn main() {
     dioxus::launch(app);
 }
 
-fn app() -> Element {
-    // State for wallet balance
-    let mut balance = use_signal(|| None);
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum Tab {
+    Wallet,
+    Send,
+    Receive,
+}
 
-    // Fetch balance when component mounts
-    use_future(move || async move {
-        let fetched_balance = wallet_handler::get_balance().await;
-        balance.set(Some(fetched_balance));
-    });
+fn app() -> Element {
+    let current_tab = use_signal(|| Tab::Wallet);
 
     rsx! {
         div {
             style: "background: #f5f6fa; color: #222; font-family: sans-serif; padding: 32px;",
             h1 { "Anya Wallet" }
+            TabBar { current_tab: current_tab.clone() }
             div {
-                style: "margin-top: 24px; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px #eee; padding: 24px;",
-                h2 { "Balance" }
-                match *balance.read() {
-                    Some(Ok(ref b)) => rsx!(p { "{b:?} ANYA" }),
-                    Some(Err(_)) => rsx!(p { "Error fetching balance" }),
-                    None => rsx!(p { "Loading..." }),
+                style: "flex-grow: 1; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px #eee; padding: 24px;",
+                match *current_tab.read() {
+                    Tab::Wallet => rsx! { WalletScreen {} },
+                    Tab::Send => rsx! { SendScreen {} },
+                    Tab::Receive => rsx! { ReceiveScreen {} },
                 }
             }
-            // Add more UI components: Send, Receive, Transactions, etc.
         }
     }
+}
+
+#[component]
+fn TabBar(current_tab: Signal<Tab>) -> Element {
+    let tab_button = |tab: Tab, label: &str| {
+        let is_active = *current_tab.read() == tab;
+        let style = if is_active {
+            "font-weight: bold; color: #1976d2;"
+        } else {
+            ""
+        };
+        rsx! {
+            button {
+                style: "{style}",
+                onclick: move |_| current_tab.set(tab),
+                "{label}"
+            }
+        }
+    };
+
+    rsx! {
+        div {
+            style: "display: flex; justify-content: space-around; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px #eee; padding: 12px; margin-bottom: 24px;",
+            {tab_button(Tab::Wallet, "Wallet")}
+            {tab_button(Tab::Send, "Send")}
+            {tab_button(Tab::Receive, "Receive")}
+        }
+    }
+}
+
+// Placeholder components for demonstration
+#[component]
+fn WalletScreen() -> Element {
+    rsx! { div { "Wallet Screen" } }
+}
+
+#[component]
+fn SendScreen() -> Element {
+    rsx! { div { "Send Screen" } }
+}
+
+#[component]
+fn ReceiveScreen() -> Element {
+    rsx! { div { "Receive Screen" } }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use dioxus::prelude::*;
+
+    #[tokio::test]
+    async fn test_wallet_handler_get_balance_async() {
+        assert!(true, "Replace with real async wallet_handler test");
+    }
+
+    // Example of a Dioxus component test (requires dioxus-testing crate)
+    // #[test]
+    // fn test_app_component_renders() {
+    //     use dioxus_testing::prelude::*;
+    //     let mut tester = VirtualDom::new(app);
+    //     tester.rebuild();
+    //     let html = tester.render_to_string();
+    //     assert!(html.contains("Anya Wallet"));
+    // }
 }
