@@ -1,8 +1,9 @@
 use dioxus::prelude::*;
+use anya_core::bitcoin::wallet::Wallet;
 
 #[component]
-pub fn ReceiveScreen() -> Element {
-    let wallet_address = "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh";
+pub fn ReceiveScreen(wallet: Signal<Wallet>) -> Element {
+    let wallet_address = wallet.read().address();
 
     rsx! {
         div {
