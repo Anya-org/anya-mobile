@@ -1,8 +1,9 @@
 use dioxus::prelude::*;
-use anya_core::bitcoin::wallet::Wallet;
+use crate::adapters::WalletAdapter;
+use crate::ports::WalletPort;
 
 #[component]
-pub fn WalletScreen(wallet: Signal<Wallet>) -> Element {
+pub fn WalletScreen(wallet: Signal<Box<WalletAdapter>>) -> Element {
     let wallet = wallet.read();
     let balance = wallet.balance();
     let transactions = wallet.transactions();
@@ -21,11 +22,15 @@ pub fn WalletScreen(wallet: Signal<Wallet>) -> Element {
                 h3 { "Transaction History" }
                 ul {
                     style: "list-style: none; padding: 0;",
-                    for transaction in transactions {
-                        li {
-                            style: "display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee;",
-                            span { "{transaction.direction}" }
-                            span { "{transaction.amount} BTC" }
+                    if transactions.is_empty() {
+                        li { "No transactions yet." }
+                    } else {
+                        for transaction in transactions.iter() {
+                            li {
+                                style: "display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee;",
+                                span { "{transaction.direction}" }
+                                span { "{transaction.amount} BTC" }
+                            }
                         }
                     }
                 }
