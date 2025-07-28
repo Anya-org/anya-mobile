@@ -1,4 +1,5 @@
 use dioxus::prelude::*;
+// use anya_core::bitcoin::wallet::Wallet; // Unused import removed
 use crate::adapters::WalletAdapter;
 use crate::ports::WalletPort;
 
@@ -25,7 +26,7 @@ pub fn WalletScreen(wallet: Signal<Box<WalletAdapter>>) -> Element {
                     if transactions.is_empty() {
                         li { "No transactions yet." }
                     } else {
-                        for transaction in transactions {
+                        for transaction in transactions.iter() {
                             li {
                                 style: "display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee;",
                                 span { "{transaction.direction}" }
