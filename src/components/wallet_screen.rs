@@ -1,5 +1,4 @@
 use dioxus::prelude::*;
-// use anya_core::bitcoin::wallet::Wallet; // Unused import removed
 use crate::adapters::WalletAdapter;
 use crate::ports::WalletPort;
 

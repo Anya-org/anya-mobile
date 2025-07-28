@@ -6,6 +6,7 @@ edition = "2021"
 [dependencies]
 anya-core = { version = "1.2.0"}
 dioxus = { version = "0.6.3", features = ["desktop", "hooks"] }
+bip39 = "2.0.0"
 async-trait = "*"
 
 [dev-dependencies]

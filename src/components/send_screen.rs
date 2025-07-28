@@ -1,6 +1,8 @@
 use dioxus::prelude::*;
 use crate::adapters::WalletAdapter;
 use crate::ports::WalletPort;
+use anya_core::bitcoin::Address;
+use std::str::FromStr;
 
 #[component]
 pub fn SendScreen(wallet: Signal<Box<WalletAdapter>>) -> Element {
