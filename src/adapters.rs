@@ -1,6 +1,6 @@
 // Hexagonal architecture: Wallet adapter implementation
 use crate::ports::{WalletPort, Transaction};
-use anya_core::bitcoin::wallet::{Wallet as CoreWallet, WalletConfig, AddressType, BalanceManager, TransactionManager, AddressManager, WalletType, CoinSelectionStrategy, FeeStrategy};
+use anya_core::bitcoin::wallet::{Wallet as CoreWallet, WalletConfig, AddressType, BalanceManager, TransactionManager, WalletType, CoinSelectionStrategy, FeeStrategy, WalletError};
 use anya_core::bitcoin::interface::BitcoinInterface;
 use anya_core::bitcoin::Network;
 use std::sync::Arc;
@@ -33,34 +33,49 @@ impl WalletAdapter {
         let bitcoin_client: Option<Arc<dyn BitcoinInterface>> = None;
         Self { inner: CoreWallet::new(config, bitcoin_client) }
     }
+
+    // Helper function to get the last error from anya_core (if available)
+    fn last_error(&self) -> Option<WalletError> {
+        // This is a placeholder. You would need to expose a way to get the last error from anya_core
+        // For now, we'll assume anya_core returns errors directly from the methods.
+        None
+    }
 }
 
 impl WalletPort for WalletAdapter {
     fn address(&self) -> String {
-        // Use index 0 and default address type (update as needed)
-        // Replace AddressType::default() with a valid variant, e.g., AddressType::Legacy
         match self.inner.get_address(0, AddressType::Legacy) {
             Ok(addr) => addr.to_string(),
-            Err(_) => String::new(),
+            Err(_) => "Error getting address".to_string(), // Improved error message
         }
     }
+
     fn balance(&self) -> f64 {
-        // Use BalanceManager trait
         BalanceManager::get_balance(&self.inner).unwrap_or(0) as f64
     }
+
     fn transactions(&self) -> Vec<Transaction> {
-        // Use TransactionManager trait
         TransactionManager::get_transactions(&self.inner, 20, 0)
             .unwrap_or_default()
             .into_iter()
-            .map(|tx| Transaction {
-                direction: "unknown".to_string(), // Replace with actual logic if available
-                amount: 0.0, // Replace with actual logic if available
+            .map(|tx| {
+                let amount = tx.amount as f64;
+                let direction = if tx.is_incoming {
+                    "in".to_string()
+                } else {
+                    "out".to_string()
+                };
+                Transaction {
+                    direction,
+                    amount,
+                }
             })
             .collect()
     }
+
     fn send(&mut self, recipient: String, amount: f64) -> Result<(), String> {
-        // Implement send logic using CoreWallet API (placeholder)
-        Err("Send not implemented".to_string())
+        // Map anya_core errors to a String for now
+        TransactionManager::create_and_send_transaction(&mut self.inner, vec![(recipient, amount as u64)])
+            .map_err(|e| e.to_string())
     }
 }
