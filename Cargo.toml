@@ -8,6 +8,7 @@ anya-core = { version = "1.2.0"}
 dioxus = { version = "0.6.3", features = ["desktop", "hooks"] }
 bip39 = "2.0.0"
 async-trait = "*"
+arboard = "3.4.0"
 
 [dev-dependencies]
 dioxus-ssr = "0.6.2"

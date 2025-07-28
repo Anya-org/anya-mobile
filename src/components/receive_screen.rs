@@ -5,18 +5,19 @@ use crate::ports::WalletPort;
 #[component]
 pub fn ReceiveScreen(wallet: Signal<Box<WalletAdapter>>) -> Element {
     let wallet_address = wallet.read().address();
+    let wallet_address_clone = wallet_address.clone();
 
     let copy_address = move |_| {
         // TODO: Implement clipboard copy functionality
         #[cfg(not(target_arch = "wasm32"))] // Example: Clipboard access on non-web platforms
-        if let Err(e) = arboard::Clipboard::new().and_then(|mut ctx| ctx.set_text(&wallet_address)) {
+        if let Err(e) = arboard::Clipboard::new().and_then(|mut ctx| ctx.set_text(&wallet_address_clone)) {
             eprintln!("Failed to copy address to clipboard: {}", e);
         }
 
         #[cfg(target_arch = "wasm32")] // Example: Clipboard access on web platform
         if let Some(window) = web_sys::window() {
             if let Some(navigator) = window.navigator().unchecked_into::<web_sys::Navigator>().clipboard().as_ref() {
-                 let _ = navigator.write_text(&wallet_address);
+                 let _ = navigator.write_text(&wallet_address_clone);
             }
         }
     };
