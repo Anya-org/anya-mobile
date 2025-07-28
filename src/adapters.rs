@@ -1,6 +1,6 @@
 // Hexagonal architecture: Wallet adapter implementation
 use crate::ports::{WalletPort, Transaction};
-use anya_core::bitcoin::wallet::{Wallet as CoreWallet, WalletConfig, AddressType, BalanceManager, TransactionManager, WalletType, CoinSelectionStrategy, FeeStrategy, WalletError, AddressManager, transactions};
+use anya_core::bitcoin::wallet::{Wallet as CoreWallet, WalletConfig, AddressType, BalanceManager, TransactionManager, WalletType, CoinSelectionStrategy, FeeStrategy, AddressManager, transactions};
 use anya_core::bitcoin::interface::BitcoinInterface;
 use anya_core::bitcoin::Network;
 use std::sync::Arc;
@@ -32,13 +32,6 @@ impl WalletAdapter {
         // The bitcoin_client should implement BitcoinInterface, but for now use None
         let bitcoin_client: Option<Arc<dyn BitcoinInterface>> = None;
         Self { inner: CoreWallet::new(config, bitcoin_client) }
-    }
-
-    // Helper function to get the last error from anya_core (if available)
-    fn last_error(&self) -> Option<WalletError> {
-        // This is a placeholder. You would need to expose a way to get the last error from anya_core
-        // For now, we'll assume anya_core returns errors directly from the methods.
-        None
     }
 }
 
