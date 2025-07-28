@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
-mod ports;
-mod adapters;
+pub mod ports;
+pub mod adapters;
 use crate::adapters::WalletAdapter;
 
 pub mod components;
