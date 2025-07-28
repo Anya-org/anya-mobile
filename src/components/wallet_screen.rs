@@ -37,4 +37,4 @@ pub fn WalletScreen(wallet: Signal<Box<WalletAdapter>>) -> Element {
             }
         }
     }
-} 
+}

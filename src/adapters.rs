@@ -1,6 +1,7 @@
 // Hexagonal architecture: Wallet adapter implementation
 use crate::ports::{WalletPort, Transaction};
-use anya_core::bitcoin::wallet::{Wallet as CoreWallet, WalletConfig, AddressType, BalanceManager, TransactionManager, AddressManager, BitcoinInterface};
+use anya_core::bitcoin::wallet::{Wallet as CoreWallet, WalletConfig, AddressType, BalanceManager, TransactionManager, AddressManager};
+use anya_core::bitcoin::interface::BitcoinInterface;
 use std::sync::Arc;
 
 pub struct WalletAdapter {
