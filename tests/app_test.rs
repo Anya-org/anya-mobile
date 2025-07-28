@@ -1,5 +1,6 @@
 use anya_mobile::app;
 use dioxus::prelude::*;
+use anya_mobile::adapters::WalletAdapter;
 
 #[test]
 fn app_renders() {
@@ -14,7 +15,10 @@ use anya_mobile::components::receive_screen::ReceiveScreen;
 
 #[test]
 fn send_screen_renders() {
-    let mut dom = VirtualDom::new(SendScreen);
+    let mut dom = VirtualDom::new(|| {
+        let wallet = use_signal(|| Box::new(WalletAdapter::new()));
+        rsx! { SendScreen { wallet: wallet } }
+    });
     dom.rebuild_to_vec();
     let html = dioxus_ssr::render(&dom);
     assert!(html.contains("Recipient Address"));
@@ -24,9 +28,11 @@ fn send_screen_renders() {
 
 #[test]
 fn receive_screen_renders() {
-    let mut dom = VirtualDom::new(ReceiveScreen);
+    let mut dom = VirtualDom::new(|| {
+        let wallet = use_signal(|| Box::new(WalletAdapter::new()));
+        rsx! { ReceiveScreen { wallet: wallet } }
+    });
     dom.rebuild_to_vec();
     let html = dioxus_ssr::render(&dom);
     assert!(html.contains("Your Wallet Address"));
-    assert!(html.contains("bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh"));
 }

@@ -1,8 +1,10 @@
 // Hexagonal architecture: Wallet adapter implementation
 use crate::ports::{WalletPort, Transaction};
-use anya_core::bitcoin::wallet::{Wallet as CoreWallet, WalletConfig, AddressType, BalanceManager, TransactionManager, AddressManager};
-// use anya_core::bitcoin::interface::BitcoinInterface; // Unused import removed
+use anya_core::bitcoin::wallet::{Wallet as CoreWallet, WalletConfig, AddressType, BalanceManager, TransactionManager, AddressManager, WalletType, CoinSelectionStrategy, FeeStrategy};
+use anya_core::bitcoin::interface::BitcoinInterface;
+use anya_core::bitcoin::Network;
 use std::sync::Arc;
+use std::path::PathBuf;
 
 pub struct WalletAdapter {
     inner: CoreWallet,
@@ -11,9 +13,24 @@ pub struct WalletAdapter {
 impl WalletAdapter {
     pub fn new() -> Self {
         // Example config, replace with real config as needed
-        let config = WalletConfig { /* fill with required fields */ };
+        let config = WalletConfig {
+            wallet_type: WalletType::Standard,
+            network: Network::Testnet,
+            name: "anya-wallet".to_string(),
+            seed_phrase: None,
+            password: None,
+            receive_descriptor: "".to_string(),
+            change_descriptor: "".to_string(),
+            xpub: None,
+            data_dir: PathBuf::from("./"),
+            use_rpc: false,
+            coin_selection: CoinSelectionStrategy::LargestFirst,
+            gap_limit: 20,
+            min_confirmations: 1,
+            fee_strategy: FeeStrategy::Medium,
+        };
         // The bitcoin_client should implement BitcoinInterface, but for now use None
-        let bitcoin_client: Option<Arc<dyn TransactionManager + Send + Sync>> = None;
+        let bitcoin_client: Option<Arc<dyn BitcoinInterface>> = None;
         Self { inner: CoreWallet::new(config, bitcoin_client) }
     }
 }
@@ -21,8 +38,8 @@ impl WalletAdapter {
 impl WalletPort for WalletAdapter {
     fn address(&self) -> String {
         // Use index 0 and default address type (update as needed)
-        // Replace AddressType::default() with a valid variant, e.g., AddressType::P2pkh
-        match self.inner.get_address(0, AddressType::P2pkh) {
+        // Replace AddressType::default() with a valid variant, e.g., AddressType::Legacy
+        match self.inner.get_address(0, AddressType::Legacy) {
             Ok(addr) => addr.to_string(),
             Err(_) => String::new(),
         }
