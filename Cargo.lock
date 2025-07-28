@@ -227,6 +227,7 @@ name = "anya-mobile"
 version = "0.1.0"
 dependencies = [
  "anya-core",
+ "async-trait",
  "dioxus",
  "dioxus-ssr",
 ]

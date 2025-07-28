@@ -4,8 +4,9 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-anya-core = "*"
+anya-core = { version = "1.2.0"}
 dioxus = { version = "0.6.3", features = ["desktop", "hooks"] }
+async-trait = "*"
 
 [dev-dependencies]
 dioxus-ssr = "0.6.2"

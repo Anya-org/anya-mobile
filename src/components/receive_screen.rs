@@ -1,8 +1,9 @@
 use dioxus::prelude::*;
-use anya_core::bitcoin::wallet::Wallet;
+use crate::adapters::WalletAdapter;
+use crate::ports::WalletPort;
 
 #[component]
-pub fn ReceiveScreen(wallet: Signal<Wallet>) -> Element {
+pub fn ReceiveScreen(wallet: Signal<Box<WalletAdapter>>) -> Element {
     let wallet_address = wallet.read().address();
 
     rsx! {

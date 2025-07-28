@@ -1,8 +1,9 @@
 use dioxus::prelude::*;
-use anya_core::bitcoin::wallet::Wallet;
+use crate::adapters::WalletAdapter;
+use crate::ports::WalletPort;
 
 #[component]
-pub fn SendScreen(wallet: Signal<Wallet>) -> Element {
+pub fn SendScreen(wallet: Signal<Box<WalletAdapter>>) -> Element {
     let mut recipient = use_signal(String::new);
     let mut amount = use_signal(String::new);
 
@@ -14,7 +15,7 @@ pub fn SendScreen(wallet: Signal<Wallet>) -> Element {
                 style: "display: flex; flex-direction: column; gap: 16px;",
                 onsubmit: move |_| {
                     if let (Ok(parsed_amount), Ok(_)) = (amount.read().parse::<f64>(), recipient.read().parse::<String>()) {
-                        wallet.write().send(recipient.read().clone(), parsed_amount);
+                        (*wallet.write()).send(recipient.read().clone(), parsed_amount);
                     }
                 },
                 input {
