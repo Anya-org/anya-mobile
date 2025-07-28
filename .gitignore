@@ -1,2 +1,3 @@
 # Ignore build output directory
 target/
+node_modules/
