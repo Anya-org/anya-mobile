@@ -7,5 +7,6 @@ sudo apt-get install -y \
     libgtk-3-dev \
     protobuf-compiler \
     libjavascriptcoregtk-4.1-dev \
+    webkit2gtk-4.1 \
     libsoup-3.0-dev \
     libxdo-dev
