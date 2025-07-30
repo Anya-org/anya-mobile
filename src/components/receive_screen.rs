@@ -9,7 +9,7 @@ pub fn ReceiveScreen(wallet: Signal<Box<WalletAdapter>>) -> Element {
 
     let copy_address = move |_| {
         // TODO: Implement clipboard copy functionality
-        #[cfg(not(target_arch = "wasm32"))] // Example: Clipboard access on non-web platforms
+        #[cfg(all(not(target_arch = "wasm32"), not(target_os = "android")))] // Example: Clipboard access on non-web platforms
         if let Err(e) = arboard::Clipboard::new().and_then(|mut ctx| ctx.set_text(&wallet_address_clone)) {
             eprintln!("Failed to copy address to clipboard: {}", e);
         }
