@@ -1,16 +1,14 @@
-// Hexagonal architecture: Wallet port trait
-use async_trait::async_trait;
+use crate::adapters::AdapterError;
 
-#[async_trait]
-pub trait WalletPort: Send + Sync {
-    fn address(&self) -> String;
-    fn balance(&self) -> f64;
-    fn transactions(&self) -> Vec<Transaction>;
-    fn send(&mut self, recipient: String, amount: f64) -> Result<(), String>;
+pub trait WalletPort {
+    fn address(&self) -> Result<String, AdapterError>;
+    fn balance(&self) -> Result<u64, AdapterError>;
+    fn transactions(&self) -> Result<Vec<Transaction>, AdapterError>;
+    fn send(&self, recipient: String, amount: u64) -> Result<(), AdapterError>;
 }
 
 #[derive(Clone, Debug)]
 pub struct Transaction {
     pub direction: String,
-    pub amount: f64,
+    pub amount: u64, // amount in satoshis
 }

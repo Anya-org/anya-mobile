@@ -9,6 +9,11 @@ dioxus = { version = "0.6.3", features = ["desktop", "hooks"] }
 bip39 = "2.0.0"
 async-trait = "*"
 arboard = "3.4.0"
+anyhow = "1.0"
+dirs = "5.0"
+serde = { version = "1.0", features = ["derive"] }
+thiserror = "1.0"
+toml = "0.8"
 
 [dev-dependencies]
 dioxus-ssr = "0.6.2"
