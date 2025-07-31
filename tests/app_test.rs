@@ -13,23 +13,25 @@ fn app_renders() {
 use anya_mobile::components::send_screen::SendScreen;
 use anya_mobile::components::receive_screen::ReceiveScreen;
 
+use std::sync::Arc;
+
 #[test]
 fn send_screen_renders() {
     let mut dom = VirtualDom::new(|| {
-        let wallet = use_signal(|| Box::new(WalletAdapter::new()));
+        let wallet = Arc::new(WalletAdapter::new().unwrap());
         rsx! { SendScreen { wallet: wallet } }
     });
     dom.rebuild_to_vec();
     let html = dioxus_ssr::render(&dom);
     assert!(html.contains("Recipient Address"));
-    assert!(html.contains("Amount"));
+    assert!(html.contains("Amount in BTC"));
     assert!(html.contains("Send"));
 }
 
 #[test]
 fn receive_screen_renders() {
     let mut dom = VirtualDom::new(|| {
-        let wallet = use_signal(|| Box::new(WalletAdapter::new()));
+        let wallet = Arc::new(WalletAdapter::new().unwrap());
         rsx! { ReceiveScreen { wallet: wallet } }
     });
     dom.rebuild_to_vec();
