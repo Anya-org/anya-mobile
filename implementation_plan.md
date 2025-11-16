@@ -2,6 +2,17 @@
 
 This document outlines the implementation plan for the multi-layer Bitcoin wallet. The plan is divided into several phases, with each phase having a specific set of goals and deliverables.
 
+## Progress
+
+### Phase 1: Core Logic and Basic Infrastructure
+
+- [X] Project Setup
+- [X] Implement Core Data Structures
+- [X] Implement Driving Ports (`WalletService`, `AccountService`, and `TransactionService`)
+- [ ] Implement Driven Ports
+- [ ] Implement Basic Adapters
+- [X] Unit Testing
+
 ## Phase 1: Core Logic and Basic Infrastructure
 
 *   **Goal:** To implement the core logic of the wallet and to set up the basic infrastructure for the project.
