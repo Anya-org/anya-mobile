@@ -13,6 +13,15 @@ This document outlines the implementation plan for the multi-layer Bitcoin walle
 - [ ] Implement Basic Adapters
 - [X] Unit Testing
 
+### Phase 1.5: Decentralized Web App Proof-of-Concept
+
+- [X] Research Decentralized Technologies
+- [X] Setup Development Environment
+- [X] Implement Decentralized Storage (IPFS)
+- [X] Implement Decentralized Hosting (Fleek)
+- [X] Implement Core Wallet Logic
+- [X] Build Basic Frontend UI
+
 ## Phase 1: Core Logic and Basic Infrastructure
 
 *   **Goal:** To implement the core logic of the wallet and to set up the basic infrastructure for the project.
@@ -31,6 +40,23 @@ This document outlines the implementation plan for the multi-layer Bitcoin walle
         *   Implement a `MockBlockchainClient` for testing purposes.
     6.  **Unit Testing:**
         *   Write comprehensive unit tests for the core logic.
+
+## Phase 1.5: Decentralized Web App Proof-of-Concept
+
+*   **Goal:** To build a proof-of-concept for a decentralized web application version of the wallet.
+*   **Tasks:**
+    1.  **Research Decentralized Technologies:**
+        *   Research and select suitable technologies for decentralized storage, hosting, and domains.
+    2.  **Setup Development Environment:**
+        *   Install and configure the necessary CLI tools and libraries.
+    3.  **Implement Decentralized Storage (IPFS):**
+        *   Implement a service for uploading and downloading data to IPFS.
+    4.  **Implement Decentralized Hosting (Fleek):**
+        *   Prepare the project for deployment to Fleek.
+    5.  **Implement Core Wallet Logic:**
+        *   Implement the logic for creating and managing wallets.
+    6.  **Build Basic Frontend UI:**
+        *   Create a simple user interface for interacting with the wallet.
 
 ## Phase 2: Bitcoin L1 and GUI Scaffolding
 
