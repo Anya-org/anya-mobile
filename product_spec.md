@@ -39,6 +39,10 @@ The wallet will provide native support for the following Bitcoin layers:
 *   **Ports and Adapters Architecture:** The wallet will be designed with a modular architecture that allows for easy integration of new layers, protocols, and features.
 *   **Open Source:** The wallet will be open source to encourage community contribution and to ensure transparency.
 
+### 3.6. Decentralized Web App
+
+*   **Proof-of-Concept:** A proof-of-concept for a decentralized web application version of the wallet has been implemented. This version utilizes a fully decentralized stack for storage and hosting.
+
 ## 4. User Flows
 
 *   **Onboarding:** A simple and secure process for creating a new wallet or importing an existing one.
